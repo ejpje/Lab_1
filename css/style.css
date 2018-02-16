@@ -1,22 +1,20 @@
 /*Stylesheet by Emily Pettit, 2018*/
+#map {
+  height: 100%;
+  width: 100%;
+}
+
 h1 {
-  color: grey;
-  width: 30%;
+  color: black;
+  width: 100%;
   margin: 0 auto;
-  height: 40px;
   text-align: center;
 }
 p {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
-#map {
-  height: 500px;
-  width: 50%;
-  margin: auto;
-}
-
-/* html, body, #Londonmap {
+/*html, body, #map {
   height: 100%;
   width: 100%;
-}
+}*/
