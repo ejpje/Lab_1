@@ -1,20 +1,42 @@
 /*Stylesheet by Emily Pettit, 2018*/
+
+body {
+  background-color: #331a00;
+  font-size: 100%;
+}
+
+html, body, #map {
+  height: 500px;
+  width: 95%;
+  margin: auto;
+}
+
 #map {
-  height: 100%;
-  width: 100%;
+  z-index: 5;
 }
 
-h1 {
-  color: black;
-  width: 100%;
-  margin: 0 auto;
+
+#maptitle {
   text-align: center;
-}
-p {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  height: auto;
+  width: auto;
+  color: #ff3300;
+  z-index: 10;
+  font-family: "Trebuchet", Helvetica, sans-serif;
+  font-size: 2.5em;
+  font-weight: bold;
 }
 
-/*html, body, #map {
-  height: 100%;
-  width: 100%;
-}*/
+#mapsubtitle {
+  text-align: center;
+  height: auto;
+  width: auto;
+  color: #ff5c33;
+  z-index: 10;
+  font-family: "Trebuchet", Helvetica, sans-serif;
+}
+
+p {
+  text-align: center;
+  color: #fff6d7;
+}
