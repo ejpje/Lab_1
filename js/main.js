@@ -13,13 +13,13 @@ function calcPropRadius(attValue) {
 
 //add circle markers for point features to the map
 function createPropSymbols(data, map){
-
+  //determine attribute to visualize with proportional symbols
   var attribute = "wildFires_2017";
 
   //create marker options
   var geojsonMarkerOptions = {
     radius: 8,
-    fillColor: "#ff0000",
+    fillColor: "#ff3300",
     color: "#000",
     weight: 1,
     opacity: 1,
@@ -28,7 +28,7 @@ function createPropSymbols(data, map){
 
   //create a Leaflet GeoJSON layer and add it to the map
   L.geoJson(data, {
-    pointToLayer: function (feature, latlng) {
+    pointToLayer: function(feature, latlng) {
       //determine the value for each feature
       var attValue = Number(feature.properties[attribute]);
 
@@ -40,7 +40,6 @@ function createPropSymbols(data, map){
     }
   }).addTo(map);
 };
-
 
 //import GeoJSON data
 function getData(map){

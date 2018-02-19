@@ -41,12 +41,6 @@ function getData(map){
     success: function(response){
       //create marker options
     var geojsonMarkerOptions = {
-        radius: 8,
-        fillColor: "#ff7800",
-        color: "#000",
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.8,
       };
 
       //create a Leaflet GeoJSON layer and add it to the map
@@ -59,5 +53,6 @@ function getData(map){
     }
   });
 };
+
 
 $(document).ready(createMap);
