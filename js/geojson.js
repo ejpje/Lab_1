@@ -20,19 +20,6 @@ function createMap(){
   getData(map);
 };
 
-//function to attach popups
-function onEachFeature(feature, layer) {
-  //no property named popupContent; instead, create html string with all properties
-  var popupContent = "";
-  if (feature.properties) {
-    //loop to add feature property names and values to html string
-    for (var property in feature.properties){
-      popupContent += "<p>" + property + ": " + feature.properties[property] + "</p>";
-    }
-    layer.bindPopup(popupContent);
-  };
-};
-
 //function to import GeoJSON data
 function getData(map){
   //load the data

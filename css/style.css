@@ -5,16 +5,13 @@ body {
   font-size: 100%;
 }
 
-html, body, #map {
+#map {
   height: 500px;
   width: 95%;
   margin: auto;
-}
-
-#map {
   z-index: 5;
+  display: inline-block;
 }
-
 
 #maptitle {
   text-align: center;
@@ -36,7 +33,39 @@ html, body, #map {
   font-family: "Trebuchet", Helvetica, sans-serif;
 }
 
-p {
+.leaflet-popup-content p {
+  margin: 0.2em 0;
+  color: black;
+}
+
+#introduction {
   text-align: center;
-  color: #fff6d7;
+  color: white;
+}
+
+#panel {
+  width: 20%;
+  padding: 20px;
+  vertical-align: top;
+  background-color: white;
+  text-align: center;
+  line-height: 42px;
+  z-index: 5;
+  margin: auto;
+}
+
+.range-slider {
+  width: 50%;
+}
+
+#forward {
+  float: right;
+  width: 40px;
+  z-index: 5;
+}
+
+#reverse {
+  float: left;
+  width: 40px;
+  z-index: 5;
 }
