@@ -54,6 +54,16 @@ body {
   margin: auto;
 }
 
+#panel2 {
+  width: 20%;
+  padding: 20px;
+  vertical-align: top;
+  background-color: white;
+  text-align: center;
+  line-height: 42px;
+  margin: auto;
+}
+
 .range-slider {
   width: 50%;
 }

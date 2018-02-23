@@ -20,26 +20,5 @@ function createMap(){
   getData(map);
 };
 
-//function to import GeoJSON data
-function getData(map){
-  //load the data
-  $.ajax("data/Fires.geojson", {
-    dataType: "json",
-    success: function(response){
-      //create marker options
-    var geojsonMarkerOptions = {
-      };
-
-      //create a Leaflet GeoJSON layer and add it to the map
-      L.geoJson(response, {
-        //onEachFeature: onEachFeature
-        pointToLayer: function (feature, latlng){
-          return L.circleMarker(latlng, geojsonMarkerOptions);
-        }
-      }).addTo(map);
-    }
-  });
-};
-
 
 $(document).ready(createMap);
