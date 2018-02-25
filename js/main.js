@@ -1,6 +1,4 @@
 /*Script by Emily Pettit, 2018*/
-var attributes = [];
-
 function calcPropRadius(attValue) {
   //scale factor to adjust symbol size evenly
   var scaleFactor = 50;
@@ -130,7 +128,7 @@ function updatePropSymbols(map, attribute){
 
 /////////////////////////////////////////
 //create sequence controls
-function createSequenceControls(map){
+function createSequenceControls(map, attributes){
   //create slider
   $('#panel').append('<input class="range-slider" type="range">');
 

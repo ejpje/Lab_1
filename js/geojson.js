@@ -5,8 +5,8 @@ function createMap(){
   var map = L.map('map', {
     center: [42.0000, -95.7129],
     zoom: 3,
-    minZoom: 2,
-    maxZoom: 13,
+    minZoom: 3,
+    maxZoom: 7,
   });
 
 //add a tileset to the map
