@@ -36,7 +36,7 @@ function pointToLayer(feature, latlng, attributes){
   var layer = L.circleMarker(latlng, options);
 
   //build popup content string
-  var popupContent = "<p><b>State:</b> " + feature.properties.State + "</p>";
+  var popupContent = "<p><b>" + feature.properties.State + "</b></p>";
 
   //add formatted attribute to popup content string
   var year = attribute.split("_")[1];
@@ -112,7 +112,7 @@ function updatePropSymbols(map, attribute){
           layer.setRadius(radius);
 
           //add state to popup content string
-          var popupContent = "<p><b>State:</b> " + props.State + "</p>";
+          var popupContent = "<p><b>" + props.State + "</b></p>";
 
           //add formatted attribute to panel content string
           var year = attribute.split("_")[1];

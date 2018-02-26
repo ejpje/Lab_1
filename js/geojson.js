@@ -10,8 +10,8 @@ function createMap(){
   });
 
 //add a tileset to the map
-  L.tileLayer("https://api.mapbox.com/styles/v1/ejp3/cjdkuejlj014j2solx6e6meqf/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWpwMyIsImEiOiJjamRrZ2g2d2EwMGoxMndxejdwd2poMGFhIn0.Ypo-SnygyDT2skpNIEQ60g", {
-    attribution: "&copy; <a href='http://www.openstreetmap.org/copyright'> Streets tileset from Mapbox",
+  L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWpwMyIsImEiOiJjamRrZ2g2d2EwMGoxMndxejdwd2poMGFhIn0.Ypo-SnygyDT2skpNIEQ60g", {
+    attribution: "&copy; <a href='http://www.openstreetmap.org/copyright'> Mapbox Dark",
     minZoom: 2,
     maxZoom: 13,
   }) .addTo(map);
