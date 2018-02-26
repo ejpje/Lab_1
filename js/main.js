@@ -9,12 +9,25 @@ function calcPropRadius(attValue) {
   return radius;
 };
 
+function Popup(properties, attribute, layer, radius){
+  this.properties = properties;
+  this.attribute = attribute;
+  this.layer = layer;
+  this.year = attribute.split("_")[1];
+  this.wildFires = this.properties[attribute];
+  this.content = "<p><b>State:</b> " + this.properties.State + "</p><p><b>Number of wildfires in " + this.year + ":</b> " + this.wildFires + "</p>";
+
+  this.bindToLayer = function(){
+    this.layer.bindPopup(this.content, {
+      offset: new L.Point(0,-radius)
+    });
+  };
+};
+
 //function to convert markers to circle markers
 function pointToLayer(feature, latlng, attributes){
   //assign the current attribute based on the first index
-  var attribute = attributes[7];
-  //check
-  console.log(attribute);
+  var attribute = attributes[0];
 
   //create marker options
   var options = {
@@ -35,21 +48,11 @@ function pointToLayer(feature, latlng, attributes){
   //create circle marker layer
   var layer = L.circleMarker(latlng, options);
 
-  //build popup content string
-  var popupContent = "<p><b>" + feature.properties.State + "</b></p>";
+  //create new popup
+  var popup = new Popup(feature.properties, attribute, layer, options.radius);
 
-  //add formatted attribute to popup content string
-  var year = attribute.split("_")[1];
-  popupContent += "<p><b>Number of fires in " + year + ":</b> " + feature.properties[attribute] + " </p>";
-
-  /*if (feature.properties[attribute] = "0.5" ) {
-    popupContent += "<p><b>No data " + "</b> " + " </p>";
-  }*/
-
-  //bind the popup to the circle marker
-  layer.bindPopup(popupContent, {
-    offset: new L.Point(0, -options.radius)
-  });
+  //add popup to circle marker
+  popup.bindToLayer();
 
   //event listeners to open popup on mouse hover
   layer.on({
@@ -83,10 +86,8 @@ function createPropSymbols(data, map, attributes){
 function processData(data){
   //empty array to hold attributes
   var attributes = [];
-
   //properties of the first feature in the dataset
   var properties = data.features[0].properties;
-
   //push each attribute name into an attributes array
   for (var attribute in properties){
     //only take attributes with wildfire burn values
@@ -94,10 +95,9 @@ function processData(data){
       attributes.push(attribute);
     };
   };
-
   //check result
   console.log(attributes);
-
+  
   return attributes;
 };
 
@@ -111,17 +111,11 @@ function updatePropSymbols(map, attribute){
           var radius = calcPropRadius(props[attribute]);
           layer.setRadius(radius);
 
-          //add state to popup content string
-          var popupContent = "<p><b>" + props.State + "</b></p>";
+          //create popup
+          var popup = new Popup(props, attribute, layer, radius);
 
-          //add formatted attribute to panel content string
-          var year = attribute.split("_")[1];
-          popupContent += "<p><b>Number of fires in " + year + ":</b> " + props[attribute] + " </p>";
-
-          //replace the layer popup
-          layer.bindPopup(popupContent, {
-              offset: new L.Point(0,-radius)
-          });
+          //add popup to circle marker
+          popup.bindToLayer();
       };
   });
 };
