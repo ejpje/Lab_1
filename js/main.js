@@ -163,7 +163,7 @@ function updateLegend(map, attribute){
 
     //assign the cy and r attributes
     $("#"+key).attr({
-        cy: 128 - radius,
+        cy: 127 - radius,
         r: radius
     });
 
@@ -186,7 +186,7 @@ function createLegend(map, attributes){
       $(container).append("<div id='temporal-legend'>");
 
       //start attribute legend svg string
-      var svg = "<svg id='attribute-legend' width='220px' height='128px'>";
+      var svg = "<svg id='attribute-legend' width='210px' height='127px'>";
 
       //array of circle names
       var circles = {
@@ -198,10 +198,10 @@ function createLegend(map, attributes){
       //loop to add each circle and text to svg string
       for (var circle in circles){
         //circle string
-        svg += "<circle class='legend-circle' id='" + circle + "' fill='#ff3300' fill-opacity='0.8' stroke='#000000' cx='65'/>";
+        svg += "<circle class='legend-circle' id='" + circle + "' fill='#ff3300' fill-opacity='0.8' stroke='#000000' cx='70'/>";
 
         //text string
-        svg += "<text id='" + circle + "-text' x='135' y='" + circles[circle] + "'></text>";
+        svg += "<text id='" + circle + "-text' x='140' y='" + circles[circle] + "'></text>";
       };
 
       //close svg string
