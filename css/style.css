@@ -3,6 +3,7 @@
 body {
   background-color: #331a00;
   font-size: 100%;
+  font-family: "Trebuchet", Helvetica, sans-serif;
 }
 
 html, body, #map {
@@ -42,6 +43,7 @@ html, body, #map {
   width: auto;
   font-family: "Trebuchet", Helvetica, sans-serif;
   color: #ff5c33;
+  font-weight: bold;
 }
 
 #introduction {
@@ -56,7 +58,7 @@ html, body, #map {
 #panel{
 z-index: 50;
 position: absolute;
-text-align: center; /*This centers everything in the DIV*/
+text-align: center;
 display: inline-block;
 height: auto;
 width: auto;
@@ -71,8 +73,18 @@ opacity: .5;
 
 /*The range-slider*/
 .range-slider {
-width: 300px;
-z-index: 50;
+  width: 300px;
+  vertical-align: top;
+}
+
+.sequence-control-container {
+  height: 20px;
+  width: 375px;
+  text-align: center;
+  line-height: 45px;
+  padding: 5px;
+  background-color: grey;
+  opacity: .5;
 }
 
 /*Forward button*/
@@ -91,4 +103,26 @@ width: 30px;
   margin: 0.2em 0;
   color: black;
   text-align: center;
+}
+
+.legend-control-container {
+  background-color: grey;
+}
+
+#temporal-legend {
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+#min {
+  width: 20px;
+}
+
+#max {
+  width: 70px;
+}
+
+#mean {
+  width: 40px;
 }

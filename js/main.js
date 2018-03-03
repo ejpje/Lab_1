@@ -5,7 +5,7 @@ function calcPropRadius(attValue) {
   //area based on attribute value and scale factor
   var area = attValue * scaleFactor;
   //radius calculated based on area
-  var radius = (Math.sqrt(area/Math.PI))*(.1);
+  var radius = (Math.sqrt(area/Math.PI))*(.15);
   return radius;
 };
 
@@ -62,9 +62,6 @@ function pointToLayer(feature, latlng, attributes){
     mouseout: function(){
       this.closePopup();
     },
-    click: function(){
-      $("#panel2").html(popupContent);
-    }
   });
 
   //return the circle marker to the L.geoJson pointToLayer option
@@ -81,7 +78,6 @@ function createPropSymbols(data, map, attributes){
   }).addTo(map);
 };
 
-
 //build an attributes array from the data
 function processData(data){
   //empty array to hold attributes
@@ -95,9 +91,7 @@ function processData(data){
       attributes.push(attribute);
     };
   };
-  //check result
-  console.log(attributes);
-  
+
   return attributes;
 };
 
@@ -120,22 +114,138 @@ function updatePropSymbols(map, attribute){
   });
 };
 
+function getCircleValues(map, attribute){
+    //start with min at highest possible and max at lowest possible number
+    var min = Infinity,
+        max = -Infinity;
+
+    map.eachLayer(function(layer){
+        //get the attribute value
+        if (layer.feature){
+            var attributeValue = Number(layer.feature.properties[attribute]);
+
+            //test for min
+            if (attributeValue < min){
+                min = attributeValue;
+            };
+
+            //test for max
+            if (attributeValue > max){
+                max = attributeValue;
+            };
+        };
+    });
+
+    //set mean
+    var mean = (max + min) / 2;
+
+    //return values as an object
+    return {
+        max: max,
+        mean: mean,
+        min: min
+    };
+};
+
+function updateLegend(map, attribute){
+  //create legend content
+  var year = attribute.split("_")[1];
+  var content = "Number of wildfires in " + year;
+
+  //replace legend content
+  $("#temporal-legend").html(content);
+
+  var circleValues = getCircleValues(map, attribute);
+
+  for (var key in circleValues){
+    //get the radius
+    var radius = calcPropRadius(circleValues[key]);
+
+    //assign the cy and r attributes
+    $('#'+key).attr({
+        cy: 179 - radius,
+        r: radius
+    });
+  };
+};
+
+function createLegend(map, attributes){
+  var LegendControl = L.Control.extend({
+    options: {
+      position: "bottomright"
+    },
+
+    onAdd: function(map) {
+      //create the control container with a particular class name
+      var container = L.DomUtil.create("div", "legend-control-container");
+
+      //add the temporal legend to container
+      $(container).append("<div id='temporal-legend'>");
+
+      //start attribute legend svg string
+      var svg = "<svg id='attribute-legend' width='180px' height='180px'>";
+
+      //array of circle names
+      var circles = ["max", "mean", "min"];
+
+      //loop to add each circle and text to svg
+      for (var i=0; i<circles.length; i++){
+        //circle string
+        svg += "<circle class='legend-circle' id='" + circles[i] + "' fill='#ff3300' fill-opacity='0.8' stroke='#000000' cx='90'/>";
+      };
+
+      //close svg string
+      svg += "</svg>";
+
+      //add attribute legend svg to container
+      $(container).append(svg);
+
+      return container;
+    }
+  });
+
+  map.addControl(new LegendControl());
+
+  updateLegend(map, attributes[0]);
+};
+
 /////////////////////////////////////////
 //create sequence controls
 function createSequenceControls(map, attributes){
-  //create slider
-  $('#panel').append('<input class="range-slider" type="range">');
+  var SequenceControl = L.Control.extend({
+    options: {
+      position: "bottomleft"
+    },
+
+    onAdd: function(map) {
+      //create the control container div with a particular class name
+      var container = L.DomUtil.create("div", "sequence-control-container");
+
+      //create range input element (slider)
+      $(container).append("<input class='range-slider' type='range'>")
+
+      //add skip buttons
+      $(container).append("<button class='skip' id='reverse'>Reverse</button>");
+      $(container).append("<button class='skip' id='forward'>Skip</button>");
+
+      //kill mouse event listeners on the map that interfere with slider function
+      $(container).on("mouseover dblclick", function(e){
+        L.DomEvent.stopPropagation(e);
+      });
+
+      return container;
+    }
+  });
+
+  map.addControl(new SequenceControl());
 
   //set slider attributes
-  $('.range-slider').attr({
+  $(".range-slider").attr({
     max: 7,
     min: 0,
     value: 0,
     step: 1
   });
-
-  $("#panel").append("<button class='skip' id='reverse'>Reverse</button>");
-  $("#panel").append("<button class='skip' id='forward'>Skip</button>");
 
   $("#reverse").html("<img src='img/reversearrow.svg'>");
   //icon courtesy of Wikimedia Commons and Font Awesome (fortawesome.github.com/Font-Awesome/Font-Awesome)
@@ -169,9 +279,14 @@ function createSequenceControls(map, attributes){
   $(".range-slider").on("input", function(){
     //get new index value
     var index = $(this).val();
+      $(".range-slider").click(function(){
+      updatePropSymbols(map, attributes[index]);
+    });
   });
 };
+
 ///////////////
+
 
 //import GeoJSON data
 function getData(map){
@@ -184,6 +299,7 @@ function getData(map){
 
       createPropSymbols(response, map, attributes);
       createSequenceControls(map, attributes);
+      createLegend(map, attributes);
 
     }
   });

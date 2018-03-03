@@ -20,5 +20,4 @@ function createMap(){
   getData(map);
 };
 
-
 $(document).ready(createMap);
