@@ -162,10 +162,13 @@ function updateLegend(map, attribute){
     var radius = calcPropRadius(circleValues[key]);
 
     //assign the cy and r attributes
-    $('#'+key).attr({
-        cy: 179 - radius,
+    $("#"+key).attr({
+        cy: 128 - radius,
         r: radius
     });
+
+    //add legend text
+    $("#"+key+"-text").text(Math.round(circleValues[key]*100)/100 + " fires");
   };
 };
 
@@ -183,15 +186,22 @@ function createLegend(map, attributes){
       $(container).append("<div id='temporal-legend'>");
 
       //start attribute legend svg string
-      var svg = "<svg id='attribute-legend' width='180px' height='180px'>";
+      var svg = "<svg id='attribute-legend' width='220px' height='128px'>";
 
       //array of circle names
-      var circles = ["max", "mean", "min"];
+      var circles = {
+        max: 30,
+        mean: 70,
+        min: 125
+      };
 
-      //loop to add each circle and text to svg
-      for (var i=0; i<circles.length; i++){
+      //loop to add each circle and text to svg string
+      for (var circle in circles){
         //circle string
-        svg += "<circle class='legend-circle' id='" + circles[i] + "' fill='#ff3300' fill-opacity='0.8' stroke='#000000' cx='90'/>";
+        svg += "<circle class='legend-circle' id='" + circle + "' fill='#ff3300' fill-opacity='0.8' stroke='#000000' cx='65'/>";
+
+        //text string
+        svg += "<text id='" + circle + "-text' x='135' y='" + circles[circle] + "'></text>";
       };
 
       //close svg string
@@ -268,11 +278,13 @@ function createSequenceControls(map, attributes){
       index = index < 0 ? 7 : index;
 
       updatePropSymbols(map, attributes[index]);
+      updateLegend(map, attributes[index]);
     };
 
     //update slider
     $(".range-slider").val(index);
     updatePropSymbols(map, attributes[index]);
+    updateLegend(map, attributes[index]);
   });
 
   //input listener for the slider
@@ -281,6 +293,7 @@ function createSequenceControls(map, attributes){
     var index = $(this).val();
       $(".range-slider").click(function(){
       updatePropSymbols(map, attributes[index]);
+      updateLegend(map, attributes[index]);
     });
   });
 };

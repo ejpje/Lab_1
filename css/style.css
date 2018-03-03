@@ -89,14 +89,14 @@ opacity: .5;
 
 /*Forward button*/
 #forward {
-float: right;
-width: 30px;
+  float: right;
+  width: 30px;
 }
 
 /*Back button*/
 #reverse {
-float:left;
-width: 30px;
+  float:left;
+  width: 30px;
 }
 
 .leaflet-popup-content p {
@@ -113,16 +113,4 @@ width: 30px;
   color: white;
   text-align: center;
   font-weight: bold;
-}
-
-#min {
-  width: 20px;
-}
-
-#max {
-  width: 70px;
-}
-
-#mean {
-  width: 40px;
 }
