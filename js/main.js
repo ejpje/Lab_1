@@ -1,4 +1,6 @@
 /*Script by Emily Pettit, 2018*/
+
+
 function calcPropRadius(attValue) {
   //scale factor to adjust symbol size evenly
   var scaleFactor = 50;
@@ -249,6 +251,7 @@ function createSequenceControls(map, attributes){
 
   map.addControl(new SequenceControl());
 
+
   //set slider attributes
   $(".range-slider").attr({
     max: 7,
@@ -298,9 +301,8 @@ function createSequenceControls(map, attributes){
   });
 };
 
-///////////////
 
-
+///////////////////////////////////////////////////////////////////////////
 //import GeoJSON data
 function getData(map){
   //load data

@@ -107,6 +107,7 @@ opacity: .5;
 
 .legend-control-container {
   background-color: grey;
+  opacity: 0.9;
 }
 
 #temporal-legend {
