@@ -17,9 +17,12 @@ html, body, #map {
   z-index: 50;
   position: absolute;
   display: inline-block;
-  right: 50px;
+  right: 170px;
   width: 500px;
-  height: 170px;
+  height: 130px;
+  background-color: #666666;
+  border-radius: 20px;
+  box-shadow: 5px;
 }
 
 #maptitle {
@@ -42,7 +45,7 @@ html, body, #map {
   height: auto;
   width: auto;
   font-family: "Trebuchet", Helvetica, sans-serif;
-  color: #ff5c33;
+  color: #e6e6e6;
   font-weight: bold;
 }
 
@@ -52,7 +55,7 @@ html, body, #map {
   text-align: center;
   display: inline-block;
   top: 80px;
-  color: white;
+  color: #e6e6e6;
 }
 
 #panel{
@@ -64,7 +67,7 @@ height: auto;
 width: auto;
 border-radius: 1px;
 padding: 8px;
-bottom: 10px;
+bottom: 50px;
 left:0;
 cursor: pointer;
 background-color: grey;
@@ -107,11 +110,19 @@ opacity: .5;
 
 .legend-control-container {
   background-color: grey;
-  opacity: 0.9;
+  opacity: 1;
+  color: white;
+  border-radius: 20px;
+  box-shadow: 5px;
+  background-color: #666666;
 }
 
 #temporal-legend {
   color: white;
   text-align: center;
   font-weight: bold;
+}
+
+.hide {
+  display: none;
 }

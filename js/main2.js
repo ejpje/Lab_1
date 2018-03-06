@@ -1,4 +1,14 @@
 /*Script by Emily Pettit, 2018*/
+var overlay = {
+function calcPropRadius(attValue) {
+  //scale factor to adjust symbol size evenly
+  var scaleFactor = 50;
+  //area based on attribute value and scale factor
+  var area = attValue * scaleFactor;
+  //radius calculated based on area
+  var radius = (Math.sqrt(area/Math.PI))*(.15);
+  return radius;
+};
 
 function Popup(properties, attribute, layer, radius){
   this.properties = properties;
@@ -23,7 +33,7 @@ function pointToLayer(feature, latlng, attributes){
   //create marker options
   var options = {
     radius: 8,
-    fillColor: "#ffff99",
+    fillColor: "#ff3300",
     color: "#000",
     weight: 1,
     opacity: 1,
@@ -38,6 +48,11 @@ function pointToLayer(feature, latlng, attributes){
 
   //create circle marker layer
   var layer = L.circleMarker(latlng, options);
+
+  var year = attribute.split("_")[1];
+
+  $('#range-slider').append('<a id="Year" align+"text-center"></a>');
+  $("#Year").html("<b>Display Year: </b>" + year);
 
   //create new popup
   var popup = new Popup(feature.properties, attribute, layer, options.radius);
@@ -77,7 +92,7 @@ function processData(data){
   var properties = data.features[0].properties;
   //push each attribute name into an attributes array
   for (var attribute in properties){
-    //only take attributes with prescribed fire burn values
+    //only take attributes with prescribed burn values
     if (attribute.indexOf("prescFires") > -1){
       attributes.push(attribute);
     };
@@ -101,6 +116,9 @@ function updatePropSymbols(map, attribute){
 
           //add popup to circle marker
           popup.bindToLayer();
+
+          var year = attribute.split("_")[1];
+          $("#Year").html("<b>Display Year: </b>" + year);
       };
   });
 };
@@ -189,7 +207,7 @@ function createLegend(map, attributes){
       //loop to add each circle and text to svg string
       for (var circle in circles){
         //circle string
-        svg += "<circle class='legend-circle' id='" + circle + "' fill='#ffff99' fill-opacity='0.8' stroke='#000000' cx='70'/>";
+        svg += "<circle class='legend-circle' id='" + circle + "' fill='#ff3300' fill-opacity='0.8' stroke='#000000' cx='70'/>";
 
         //text string
         svg += "<text id='" + circle + "-text' x='140' y='" + circles[circle] + "'></text>";
@@ -230,7 +248,7 @@ function createSequenceControls(map, attributes){
       $(container).append("<button class='skip' id='forward'>Skip</button>");
 
       //kill mouse event listeners on the map that interfere with slider function
-      $(container).on("mouseover dblclick", function(e){
+      $(container).on("mousedown dblclick pointerdown", function(e){
         L.DomEvent.stopPropagation(e);
       });
 
@@ -289,39 +307,14 @@ function createSequenceControls(map, attributes){
   });
 };
 
-///////////////
-/*var greyscale = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWpwMyIsImEiOiJjamRrZ2g2d2EwMGoxMndxejdwd2poMGFhIn0.Ypo-SnygyDT2skpNIEQ60g", {
-    attribution: "&copy; <a href='http://www.openstreetmap.org/copyright'>"}),
-    streets = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWpwMyIsImEiOiJjamRrZ2g2d2EwMGoxMndxejdwd2poMGFhIn0.Ypo-SnygyDT2skpNIEQ60g", {
-    attribution: "&copy; <a href='http://www.openstreetmap.org/copyright'>"}),
-    dark = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWpwMyIsImEiOiJjamRrZ2g2d2EwMGoxMndxejdwd2poMGFhIn0.Ypo-SnygyDT2skpNIEQ60g", {
-    attribution: "&copy; <a href='http://www.openstreetmap.org/copyright'>"});
-
-//var fires = L.layerGroup([greyscale]);
-var baseMaps = {
-  "Greyscale": greyscale,
-  "Streets": streets,
-  "Dark": dark
-};
-
-var overlayMap = {
-    L.geoJSON(data, {
-      pointToLayer: function(feature, latlng){
-      return pointToLayer(feature, latlng, attributes);
-    }
-  }).addTo(map);
-};
-
-L.control.layers(baseMaps).addTo(map);*/
-
-function calcPropRadius(attValue) {
-  //scale factor to adjust symbol size evenly
-  var scaleFactor = 50;
-  //area based on attribute value and scale factor
-  var area = attValue * scaleFactor;
-  //radius calculated based on area
-  var radius = (Math.sqrt(area/Math.PI))/(50);
-  return radius;
+//////////////////
+function myFunction() {
+  var x = document.getElementById("heading");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
 };
 
 //import GeoJSON data
@@ -339,4 +332,6 @@ function getData(map){
 
     }
   });
+};
+
 };

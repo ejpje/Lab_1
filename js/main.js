@@ -1,6 +1,5 @@
 /*Script by Emily Pettit, 2018*/
 
-
 function calcPropRadius(attValue) {
   //scale factor to adjust symbol size evenly
   var scaleFactor = 50;
@@ -49,6 +48,11 @@ function pointToLayer(feature, latlng, attributes){
 
   //create circle marker layer
   var layer = L.circleMarker(latlng, options);
+
+  var year = attribute.split("_")[1];
+
+  $('#range-slider').append('<a id="Year" align+"text-center"></a>');
+  $("#Year").html("<b>Display Year: </b>" + year);
 
   //create new popup
   var popup = new Popup(feature.properties, attribute, layer, options.radius);
@@ -112,6 +116,9 @@ function updatePropSymbols(map, attribute){
 
           //add popup to circle marker
           popup.bindToLayer();
+
+          var year = attribute.split("_")[1];
+          $("#Year").html("<b>Display Year: </b>" + year);
       };
   });
 };
@@ -241,7 +248,7 @@ function createSequenceControls(map, attributes){
       $(container).append("<button class='skip' id='forward'>Skip</button>");
 
       //kill mouse event listeners on the map that interfere with slider function
-      $(container).on("mouseover dblclick", function(e){
+      $(container).on("mousedown dblclick pointerdown", function(e){
         L.DomEvent.stopPropagation(e);
       });
 
@@ -250,7 +257,6 @@ function createSequenceControls(map, attributes){
   });
 
   map.addControl(new SequenceControl());
-
 
   //set slider attributes
   $(".range-slider").attr({
@@ -301,8 +307,8 @@ function createSequenceControls(map, attributes){
   });
 };
 
+//////////////////
 
-///////////////////////////////////////////////////////////////////////////
 //import GeoJSON data
 function getData(map){
   //load data
