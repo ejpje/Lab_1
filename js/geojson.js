@@ -57,7 +57,76 @@ function style(feature) {
   };
 }
 
-/*geojson = L.geoJson(statesData, {
+/*//set style for mouse hover
+function highlightFeature(e) {
+  var layer = e.target;
+
+  layer.setStyle({
+    weight: 5,
+    color: "#1111",
+    fillOpacity: 1
+  });
+
+  if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+    layer.bringToFront();
+  }
+  info.update(layer.feature.properties);
+}
+
+//set style on mouseoff
+function resetHighlight(e) {
+  geojson.resetStyle(e.target);
+  info.update();
+}
+
+//enable zoom to clicked feature
+function zoomToFeature(e) {
+  map.fitBounds(e.target.getBounds());
+}
+/*
+//enable highlight styles
+function onEachFeature(feature, layer) {
+  layer.on({
+    mouseover: highlightFeature,
+    mouseout: resetHighlight,
+    click: zoomToFeature
+  });
+}
+
+//create information popups
+var info = L.control();
+
+info.onAdd = function(map) {
+  this._div = L.DomUtil.create("div", "info");
+  this.update();
+  return this._div;
+};
+
+//method to update the control based on feature properties
+info.update = function(props) {
+  this._div.innerHTML = "<h4>Wildfires</h4>" + (props ? "<b>" + props.name + "</b><br />" + props.wildFires + "in" : "Hover over a state");
+};
+
+info.addTo(map);
+
+var legend = L.control({position: "bottomright"});
+
+legend.onAdd = function (map) {
+
+  var div = L.DomUtil.create("div", "info-legend"),
+  grades = [100, 500, 1000, 5000, 100000]
+  labels = [];
+
+  //loop through fire intervals and generate labels
+  for (var i = 0; i < grades.length; i++) {
+    div.innerHTML +=
+    "<i style='background:" + getColor(grades[i] + 1) + "'></i> " + grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+  }
+  return div;
+};
+legend.addTo(map);
+
+geojson = L.geoJson(statesData, {
 }).addTo(map);*/
 
 //call getData function
